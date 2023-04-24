@@ -32,4 +32,35 @@ public class ProductService implements IProductService{
         }
         return this.repository.findProductById(id);
     }
+
+    @Override
+    public Product update(long id, ProductRequest request) throws NotFoundException {
+        Product product = this.getProductById(id);
+        if (request.getName() != null) {
+            product.setName(request.getName());
+        }
+        if (request.getDescription() != null) {
+            product.setDescription(request.getDescription());
+        }
+        return this.repository.save(product);
+    }
+
+    @Override
+    public void delete(long id) throws NotFoundException {
+        Product product = this.getProductById(id);
+        this.repository.delete(product);
+    }
+
+    public int getAmount(long id) throws NotFoundException {
+        Product product = this.getProductById(id);
+        return product.getAmount();
+    }
+
+    @Override
+    public int addAmount(long id, int addAmount) throws NotFoundException {
+        Product product = this.getProductById(id);
+        product.setAmount(product.getAmount()+addAmount);
+        this.repository.save(product);
+        return product.getAmount();
+    }
 }

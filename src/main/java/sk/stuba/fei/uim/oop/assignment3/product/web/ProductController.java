@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sk.stuba.fei.uim.oop.assignment3.exception.NotFoundException;
 import sk.stuba.fei.uim.oop.assignment3.product.logic.IProductService;
+import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.Amount;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductRequest;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductResponse;
 
@@ -30,5 +31,20 @@ public class ProductController {
     public ProductResponse getProduct(@PathVariable("id") Long productId) throws NotFoundException {
         return new ProductResponse(this.service.getProductById(productId));
     }
-
+    @PutMapping(value = "/{id}")
+    public ProductResponse updateProduct(@PathVariable("id") Long productId,@RequestBody ProductRequest body) throws NotFoundException {
+        return new ProductResponse(this.service.update(productId,body));
+    }
+    @DeleteMapping(value = "/{id}")
+    public void deleteProduct(@PathVariable("id") Long productId) throws NotFoundException {
+        this.service.delete(productId);
+    }
+    @GetMapping("/{id}/amount")
+    public Amount getProductAmount(@PathVariable("id") Long productId) throws NotFoundException {
+        return new Amount(this.service.getAmount(productId));
+    }
+    @PostMapping("/{id}/amount")
+    public Amount addProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException {
+        return new Amount(this.service.addAmount(productId,body.getAmount()));
+    }
 }

@@ -10,5 +10,8 @@ public interface IProductService {
     List<Product> getAll();
     Product create(ProductRequest request);
     Product getProductById(long id) throws NotFoundException;
-
+    Product update(long id, ProductRequest request) throws NotFoundException;
+    void delete(long id) throws NotFoundException;
+    int getAmount(long id) throws NotFoundException;
+    int addAmount(long id, int addAmount) throws NotFoundException;
 }
