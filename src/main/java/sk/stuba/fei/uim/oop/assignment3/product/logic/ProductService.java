@@ -30,7 +30,7 @@ public class ProductService implements IProductService{
         if (product == null) {
             throw new NotFoundException();
         }
-        return this.repository.findProductById(id);
+        return product;
     }
 
     @Override
