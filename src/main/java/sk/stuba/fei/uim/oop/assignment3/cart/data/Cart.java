@@ -25,6 +25,6 @@ public class Cart {
     }
     public Cart(CartRequest cartReq){
         this.shoppingList = new ArrayList<>();
-        this.payed = cartReq.getPayed();
+        this.payed = cartReq.isPayed();
     }
 }
