@@ -3,22 +3,22 @@ package sk.stuba.fei.uim.oop.assignment3.cart.data;
 import lombok.Getter;
 import lombok.Setter;
 import sk.stuba.fei.uim.oop.assignment3.product.data.Product;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Setter
 @Getter
-public class Cart {
+@Setter
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToMany
-    private List<Product> shoppingList;
-    private boolean payed;
-    public Cart(){
-        this.shoppingList = new ArrayList<>();
+    private long amount;
+    @ManyToOne
+    private Product product;
+
+    public CartItem(){}
+    public CartItem(Product product,long amount){
+        this.amount = amount;
+        this.product = product;
     }
 }
