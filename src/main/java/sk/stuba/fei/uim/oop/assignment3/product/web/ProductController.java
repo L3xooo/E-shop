@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sk.stuba.fei.uim.oop.assignment3.exception.IllegalOperationException;
 import sk.stuba.fei.uim.oop.assignment3.exception.NotFoundException;
 import sk.stuba.fei.uim.oop.assignment3.product.logic.IProductService;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.Amount;
@@ -47,4 +48,10 @@ public class ProductController {
     public Amount addProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException {
         return new Amount(this.service.addAmount(productId,body.getAmount()));
     }
+    @PutMapping("/{id}/amount")
+    public void decreaseProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException, IllegalOperationException {
+        this.service.decreaseAmount(productId,body.getAmount());
+    }
+
+
 }

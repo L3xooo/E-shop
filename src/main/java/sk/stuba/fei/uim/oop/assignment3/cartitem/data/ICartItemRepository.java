@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop.assignment3.cart.data;
+package sk.stuba.fei.uim.oop.assignment3.cartitem.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
