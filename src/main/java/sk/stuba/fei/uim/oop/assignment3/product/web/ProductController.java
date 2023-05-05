@@ -11,6 +11,7 @@ import sk.stuba.fei.uim.oop.assignment3.product.logic.IProductService;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.Amount;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductRequest;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductResponse;
+import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductUpdateRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class ProductController {
         return new ProductResponse(this.service.getProductById(productId));
     }
     @PutMapping(value = "/{id}")
-    public ProductResponse updateProduct(@PathVariable("id") Long productId,@RequestBody ProductRequest body) throws NotFoundException {
+    public ProductResponse updateProduct(@PathVariable("id") Long productId,@RequestBody ProductUpdateRequest body) throws NotFoundException {
         return new ProductResponse(this.service.update(productId,body));
     }
     @DeleteMapping(value = "/{id}")
@@ -52,6 +53,4 @@ public class ProductController {
     public void decreaseProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException, IllegalOperationException {
         this.service.decreaseAmount(productId,body.getAmount());
     }
-
-
 }

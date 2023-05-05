@@ -29,6 +29,5 @@ public class Product {
         this.unit = p.getUnit();
         this.price = p.getPrice();
     }
-
     public Product(){}
 }

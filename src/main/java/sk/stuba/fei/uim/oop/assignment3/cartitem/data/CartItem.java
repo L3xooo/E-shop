@@ -3,6 +3,7 @@ package sk.stuba.fei.uim.oop.assignment3.cartitem.data;
 import lombok.Getter;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
+import sk.stuba.fei.uim.oop.assignment3.cart.data.Cart;
 import sk.stuba.fei.uim.oop.assignment3.product.data.Product;
 import javax.persistence.*;
 

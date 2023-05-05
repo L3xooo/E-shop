@@ -43,7 +43,9 @@ public class CartService implements ICartService{
     public Cart addToCart(Long cartId, CartItemRequest request) throws NotFoundException, IllegalOperationException {
         Cart cart = this.getUnpaid(cartId);
         this.productService.decreaseAmount(request.getProductId(), request.getAmount());
+
         CartItem searchResult = checkProductInCart(cart, request.getProductId());
+
         if ( searchResult != null) {
             searchResult.setAmount(searchResult.getAmount() + request.getAmount());
         } else {
@@ -54,7 +56,7 @@ public class CartService implements ICartService{
     }
 
     @Override
-    public double payForCart(Long cartId) throws NotFoundException, IllegalOperationException {
+    public String payForCart(Long cartId) throws NotFoundException, IllegalOperationException {
         Cart cart = this.getUnpaid(cartId);
         cart.setPayed(true);
         this.repository.save(cart);
@@ -62,10 +64,8 @@ public class CartService implements ICartService{
         for (int a = 0; a < cart.getShoppingList().size(); a++) {
             price += cart.getShoppingList().get(a).getAmount()*cart.getShoppingList().get(a).getProduct().getPrice();
         }
-        return price;
+        return Double.toString(price);
     }
-
-
 
     private CartItem checkProductInCart(Cart cart, Long productId){
         for (int a = 0; a < cart.getShoppingList().size(); a++) {

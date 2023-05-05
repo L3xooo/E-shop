@@ -7,6 +7,7 @@ import sk.stuba.fei.uim.oop.assignment3.exception.NotFoundException;
 import sk.stuba.fei.uim.oop.assignment3.product.data.IProductRepository;
 import sk.stuba.fei.uim.oop.assignment3.product.data.Product;
 import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductRequest;
+import sk.stuba.fei.uim.oop.assignment3.product.web.bodies.ProductUpdateRequest;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Product update(Long id, ProductRequest request) throws NotFoundException {
+    public Product update(Long id, ProductUpdateRequest request) throws NotFoundException {
         Product product = this.getProductById(id);
         if (request.getName() != null) {
             product.setName(request.getName());

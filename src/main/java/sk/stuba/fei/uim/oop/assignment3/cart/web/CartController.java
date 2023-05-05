@@ -32,7 +32,7 @@ public class CartController {
         return new CartResponse(this.service.addToCart(cartId, request));
     }
     @GetMapping(value = "/{id}/pay")
-    public double payForCart(@PathVariable("id") Long cartId) throws NotFoundException, IllegalOperationException {
+    public String payForCart(@PathVariable("id") Long cartId) throws NotFoundException, IllegalOperationException {
         return this.service.payForCart(cartId);
     }
 }
