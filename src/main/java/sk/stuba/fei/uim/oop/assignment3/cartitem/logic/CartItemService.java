@@ -2,33 +2,30 @@ package sk.stuba.fei.uim.oop.assignment3.cartitem.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sk.stuba.fei.uim.oop.assignment3.cart.data.Cart;
 import sk.stuba.fei.uim.oop.assignment3.cartitem.data.CartItem;
 import sk.stuba.fei.uim.oop.assignment3.cartitem.data.ICartItemRepository;
 import sk.stuba.fei.uim.oop.assignment3.cartitem.web.bodies.CartItemRequest;
 import sk.stuba.fei.uim.oop.assignment3.exception.NotFoundException;
-import sk.stuba.fei.uim.oop.assignment3.product.data.Product;
 import sk.stuba.fei.uim.oop.assignment3.product.logic.IProductService;
-
-import java.util.List;
 
 @Service
 public class CartItemService implements ICartItemService{
     @Autowired
     private ICartItemRepository repository;
     @Autowired
-    private IProductService service;
+    private IProductService productService;
 
     @Override
-    public List<CartItem> getCartItemByProductId(Long id) throws NotFoundException {
-        List<CartItem> cartItem = this.repository.findCartItemByProductId(id);
-        if (cartItem == null) {
-            throw new NotFoundException();
-        }
-        return cartItem;
+    public CartItem getCartItemByProductIdAndCartId(Long productId, Long cartId) {
+        return this.repository.findCartItemByProductIdAndCartId(productId,cartId);
     }
     @Override
     public CartItem createCartItem(CartItemRequest request) throws NotFoundException {
-        return this.repository.save(new CartItem(this.service.getProductById(request.getProductId()), request.getAmount()));
+        return this.repository.save(new CartItem(this.productService.getProductById(request.getProductId()),
+                request.getAmount()));
+    }
+    @Override
+    public void save(CartItem cartItem) {
+        this.repository.save(cartItem);
     }
 }

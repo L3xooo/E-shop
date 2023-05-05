@@ -18,6 +18,8 @@ public class CartItem {
     private int amount;
     @ManyToOne
     private Product product;
+    @OneToOne
+    private Cart cart;
     public CartItem(){}
     public CartItem(Product product,int amount){
         this.amount = amount;

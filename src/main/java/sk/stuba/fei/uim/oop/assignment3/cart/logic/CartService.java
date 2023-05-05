@@ -44,13 +44,15 @@ public class CartService implements ICartService{
         Cart cart = this.getUnpaid(cartId);
         this.productService.decreaseAmount(request.getProductId(), request.getAmount());
 
-        CartItem searchResult = checkProductInCart(cart, request.getProductId());
+        CartItem cartItem = this.cartItemService.getCartItemByProductIdAndCartId(request.getProductId(), cartId);
 
-        if ( searchResult != null) {
-            searchResult.setAmount(searchResult.getAmount() + request.getAmount());
+        if (cartItem == null) {
+            CartItem newCartItem = this.cartItemService.createCartItem(request);
+            newCartItem.setCart(cart);
+            this.cartItemService.save(newCartItem);
+            cart.getShoppingList().add(newCartItem);
         } else {
-            CartItem cartItem = this.cartItemService.createCartItem(request);
-            cart.getShoppingList().add(cartItem);
+            cartItem.setAmount(cartItem.getAmount() + request.getAmount());
         }
         return this.repository.save(cart);
     }
@@ -66,16 +68,7 @@ public class CartService implements ICartService{
         }
         return Double.toString(price);
     }
-
-    private CartItem checkProductInCart(Cart cart, Long productId){
-        for (int a = 0; a < cart.getShoppingList().size(); a++) {
-            if (cart.getShoppingList().get(a).getProduct().getId() == productId) {
-                return cart.getShoppingList().get(a);
-            }
-        }
-        return null;
-    }
-
+    @Override
     public Cart getUnpaid(Long id) throws NotFoundException, IllegalOperationException {
         Cart cart = this.getCartById(id);
         if (cart.isPayed()) {
