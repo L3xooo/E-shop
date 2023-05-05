@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     @Autowired
     private IProductService service;
-    @GetMapping
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductResponse> getAllProducts(){
         return this.service.getAll().stream().map(ProductResponse::new).collect(Collectors.toList());
     }
@@ -29,11 +29,11 @@ public class ProductController {
     public ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest body){
         return new ResponseEntity<>(new ProductResponse(this.service.create(body)), HttpStatus.CREATED);
     }
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductResponse getProduct(@PathVariable("id") Long productId) throws NotFoundException {
         return new ProductResponse(this.service.getProductById(productId));
     }
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductResponse updateProduct(@PathVariable("id") Long productId,@RequestBody ProductUpdateRequest body) throws NotFoundException {
         return new ProductResponse(this.service.update(productId,body));
     }
@@ -41,15 +41,15 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") Long productId) throws NotFoundException {
         this.service.delete(productId);
     }
-    @GetMapping("/{id}/amount")
+    @GetMapping(value = "/{id}/amount",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Amount getProductAmount(@PathVariable("id") Long productId) throws NotFoundException {
         return new Amount(this.service.getAmount(productId));
     }
-    @PostMapping("/{id}/amount")
+    @PostMapping(value = "/{id}/amount",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Amount addProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException {
         return new Amount(this.service.addAmount(productId,body.getAmount()));
     }
-    @PutMapping("/{id}/amount")
+    @PutMapping(value = "/{id}/amount",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void decreaseProductAmount(@PathVariable("id") Long productId, @RequestBody Amount body) throws NotFoundException, IllegalOperationException {
         this.service.decreaseAmount(productId,body.getAmount());
     }

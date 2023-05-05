@@ -8,8 +8,6 @@ import sk.stuba.fei.uim.oop.assignment3.cartitem.data.CartItem;
 public class CartItemResponse {
     private final int amount;
     private final Long productId;
-
-
     public CartItemResponse(CartItem cartItem) {
         this.amount = cartItem.getAmount();
         this.productId = cartItem.getProduct().getId();

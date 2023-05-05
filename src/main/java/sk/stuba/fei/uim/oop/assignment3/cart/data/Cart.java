@@ -15,7 +15,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.REMOVE})
     private List<CartItem> shoppingList;
     private boolean payed;
     public Cart(){
